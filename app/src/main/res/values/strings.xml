@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Makers Mart</string>
+    <string name="tools">Tools</string>
+    <string name="electronics">Electronics</string>
+    <string name="hardware">Hardware</string>
+    <string name="services">Services</string>
+    <string name="misc">Miscellaneous</string>
+</resources>
