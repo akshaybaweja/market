@@ -151,17 +151,17 @@ public class MainActivity extends AppCompatActivity {
 
         this.materialViewPager.getViewPager().setOffscreenPageLimit(tabCount);
         this.materialViewPager.getPagerTitleStrip().setViewPager(this.materialViewPager.getViewPager());
-        Toolbar toolbar = materialViewPager.getToolbar();
 
+        Toolbar toolbar = materialViewPager.getToolbar();
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-
             ActionBar actionBar = getSupportActionBar();
-
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setDisplayUseLogoEnabled(false);
-            actionBar.setHomeButtonEnabled(false);
-            actionBar.setDisplayHomeAsUpEnabled(false);
+            if(actionBar!=null) {
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(false);
+                actionBar.setHomeButtonEnabled(false);
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
         }
     }
 

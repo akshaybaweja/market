@@ -59,5 +59,6 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             remarks.setVisibility(TextView.GONE);
             holder.itemView.findViewById(R.id.remarkslabel).setVisibility(TextView.GONE);
         }
+
     }
 }
