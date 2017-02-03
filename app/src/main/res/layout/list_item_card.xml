@@ -40,7 +40,7 @@
 
             <TextView
                 android:id="@+id/shop_address"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SHOP ADDRESS"
                 android:textSize="16dp"
@@ -51,7 +51,8 @@
                 android:paddingBottom="10dp"
                 android:textIsSelectable="false"
                 android:typeface="serif"
-                android:paddingRight="5dp" />
+                android:paddingRight="5dp"
+                android:onClick="openMaps" />
 
             <TextView
                 android:id="@+id/shop_contact"
@@ -60,11 +61,9 @@
                 android:text="SHOP CONTACT"
                 android:textSize="18dp"
                 android:textColor="@color/blue"
-                android:textStyle="italic"
                 android:onClick="makeCall"
                 android:layout_below="@+id/shop_address"
-                android:paddingLeft="20dp"
-                android:typeface="serif"/>
+                android:paddingLeft="20dp" />
 
             <TextView
                 android:layout_width="match_parent"

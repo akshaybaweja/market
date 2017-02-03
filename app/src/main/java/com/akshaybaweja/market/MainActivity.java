@@ -9,19 +9,24 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.Slide;
+import com.transitionseverywhere.TransitionManager;
+import com.transitionseverywhere.TransitionSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,27 +91,52 @@ public class MainActivity extends AppCompatActivity {
                     switch (position) {
                         case 0:
                             imageUrl = "http://www.akshaybaweja.com/market/electronics.jpg";
-                            color = getResources().getColor(R.color.purple, null);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                color = getResources().getColor(R.color.purple, getTheme());
+                            }
+                            else {
+                                color = getResources().getColor(R.color.purple);
+                            }
                             newDrawable = getResources().getDrawable(R.drawable.ic, null);
                             break;
                         case 1:
                             imageUrl = "http://www.akshaybaweja.com/market/hardware.jpg";
-                            color = getResources().getColor(R.color.orange, null);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                color = getResources().getColor(R.color.orange, getTheme());
+                            }
+                            else {
+                                color = getResources().getColor(R.color.orange);
+                            }
                             newDrawable = getResources().getDrawable(R.drawable.hardware, null);
                             break;
                         case 2:
                             imageUrl = "http://www.akshaybaweja.com/market/tools.jpg";
-                            color = getResources().getColor(R.color.cyan, null);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                color = getResources().getColor(R.color.cyan, getTheme());
+                            }
+                            else {
+                                color = getResources().getColor(R.color.cyan);
+                            }
                             newDrawable = getResources().getDrawable(R.drawable.tool, null);
                             break;
                         case 3:
                             imageUrl = "http://www.akshaybaweja.com/market/laser.jpg";
-                            color = getResources().getColor(R.color.green, null);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                color = getResources().getColor(R.color.green, getTheme());
+                            }
+                            else {
+                                color = getResources().getColor(R.color.green);
+                            }
                             newDrawable = getResources().getDrawable(R.drawable.laser, null);
                             break;
                         case 4:
                             imageUrl = "http://www.akshaybaweja.com/market/misc.jpg";
-                            color = getResources().getColor(R.color.red, null);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                color = getResources().getColor(R.color.red, getTheme());
+                            }
+                            else {
+                                color = getResources().getColor(R.color.red);
+                            }
                             newDrawable = getResources().getDrawable(R.drawable.misc, null);
                             break;
                     }
@@ -173,15 +203,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cardClicked(View v){
-        RelativeLayout rv1 = (RelativeLayout) v.findViewById(R.id.relativeLayout1);
-        RelativeLayout rv2 = (RelativeLayout) v.findViewById(R.id.relativeLayout2);
+        ViewGroup container = (ViewGroup) v.findViewById(R.id.card_view);
 
-        if(rv1.getVisibility()==RelativeLayout.VISIBLE){
-            rv1.setVisibility(RelativeLayout.INVISIBLE);
-            rv2.setVisibility(RelativeLayout.VISIBLE);
+        View rv1 = v.findViewById(R.id.relativeLayout1);
+        View rv2 = v.findViewById(R.id.relativeLayout2);
+
+        if(rv1.getVisibility()==View.VISIBLE){
+            TransitionManager.beginDelayedTransition(container,
+                    new TransitionSet().addTransition(new Fade()).addTransition(new Slide(Gravity.RIGHT)));
+            rv1.setVisibility(View.INVISIBLE);
+            TransitionManager.beginDelayedTransition(container,
+                    new TransitionSet().addTransition(new Fade()).addTransition(new Slide(Gravity.LEFT)));
+            rv2.setVisibility(View.VISIBLE);
         } else {
-            rv2.setVisibility(RelativeLayout.INVISIBLE);
-            rv1.setVisibility(RelativeLayout.VISIBLE);
+            TransitionManager.beginDelayedTransition(container,
+                    new TransitionSet().addTransition(new Fade()).addTransition(new Slide(Gravity.TOP)));
+            rv2.setVisibility(View.INVISIBLE);
+            TransitionManager.beginDelayedTransition(container,
+                    new TransitionSet().addTransition(new Fade()).addTransition(new Slide(Gravity.BOTTOM)));
+            rv1.setVisibility(View.VISIBLE);
         }
     }
+
+    public void openMaps(View v){
+        TextView add = (TextView) v.findViewById(R.id.shop_address);
+        String address = String.valueOf(add.getText());
+
+        Uri mapUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+    }
+
 }
