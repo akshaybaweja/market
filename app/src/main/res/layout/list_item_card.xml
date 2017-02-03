@@ -25,7 +25,7 @@
             android:gravity="fill_vertical"
             android:id="@+id/relativeLayout1"
             android:backgroundTintMode="src_over"
-            android:visibility="visible">
+            android:visibility="invisible">
             <TextView
                 android:id="@+id/shop_name"
                 android:layout_width="match_parent"
@@ -79,29 +79,11 @@
             android:layout_height="wrap_content"
             android:gravity="fill_vertical"
             android:id="@+id/relativeLayout2"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="#ebe6e6">
+
             <TextView
-                android:text="Rates:"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rateslabel"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="15dp" />
-            <TextView
-                android:id="@+id/rates"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rates"
-                android:layout_below="@+id/rateslabel"
-                android:paddingLeft="20dp"
-                android:textSize="14dp" />
-            <TextView
-                android:text="Remarks:"
+                android:text="Remarks/ Deals In:"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/remarkslabel"

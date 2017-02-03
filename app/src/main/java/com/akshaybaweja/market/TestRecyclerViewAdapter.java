@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView shop_address = (TextView) holder.itemView.findViewById(R.id.shop_address);
         TextView shop_contact = (TextView) holder.itemView.findViewById(R.id.shop_contact);
         TextView closed_on = (TextView) holder.itemView.findViewById(R.id.closedOn);
-        TextView rates = (TextView) holder.itemView.findViewById(R.id.rates);
         TextView remarks = (TextView) holder.itemView.findViewById(R.id.remarks);
 
         ArrayList details = contents.get(position);
@@ -47,18 +47,16 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         shop_contact.setText(String.valueOf(details.get(2)));
         closed_on.setText("Closed on ".concat(String.valueOf(details.get(3))));
 
-        if(String.valueOf(details.get(4))!="null") {
-            rates.setText(String.valueOf(details.get(4)));
-        } else {
-            rates.setVisibility(TextView.GONE);
-            holder.itemView.findViewById(R.id.rateslabel).setVisibility(TextView.GONE);
-        }
         if(String.valueOf(details.get(5))!="null") {
             remarks.setText(String.valueOf(details.get(5)));
         } else {
-            remarks.setVisibility(TextView.GONE);
-            holder.itemView.findViewById(R.id.remarkslabel).setVisibility(TextView.GONE);
+            remarks.setVisibility(TextView.INVISIBLE);
+            TextView label = (TextView) holder.itemView.findViewById(R.id.remarkslabel);
+            label.setText("No Data Available");
+            RelativeLayout rv1 = (RelativeLayout) holder.itemView.findViewById(R.id.relativeLayout1);
+            RelativeLayout rv2 = (RelativeLayout) holder.itemView.findViewById(R.id.relativeLayout2);
+            rv2.setVisibility(RelativeLayout.INVISIBLE);
+            rv1.setVisibility(RelativeLayout.VISIBLE);
         }
-
     }
 }
