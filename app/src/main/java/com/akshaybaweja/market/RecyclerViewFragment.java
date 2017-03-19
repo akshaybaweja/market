@@ -1,8 +1,10 @@
 package com.akshaybaweja.market;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +27,7 @@ public class RecyclerViewFragment extends Fragment{
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private static int tabPosition;
 
     public static RecyclerViewFragment newInstance(int position) {
@@ -51,7 +53,44 @@ public class RecyclerViewFragment extends Fragment{
         mRecyclerView.setHasFixedSize(true);
 
         tabPosition = getArguments().getInt("position",-1);
+        switch (tabPosition) {
+            case 0:
+                sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=electronics");
+                break;
+            case 1:
+                sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=hardware");
+                break;
+            case 2:
+                sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=tools");
+                break;
+            case 3:
+                sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=service");
+                break;
+            case 4:
+                sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=miscellaneous");
+                break;
+        }
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshItems();
+                    }
+                }, 3000);
+            }
+        });
+
+        mSwipeRefreshLayout.setColorScheme(getResources().getColor(R.color.purple),
+                getResources().getColor(R.color.orange), getResources().getColor(R.color.green));
+    }
+
+    private void refreshItems() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        tabPosition = getArguments().getInt("position", -1);
         switch(tabPosition){
             case 0: sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=electronics");
                 break;
@@ -64,6 +103,9 @@ public class RecyclerViewFragment extends Fragment{
             case 4: sendRequest("http://akshaybaweja.com/market/databro.php?parameter=getCategory&category=miscellaneous");
                 break;
         }
+
+        // Load complete
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void sendRequest(String JSON_URL){
